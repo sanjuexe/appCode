@@ -1,0 +1,31 @@
+name: ascent_pms
+
+packages:
+  - packages/*
+
+ide:
+  intellij:
+    enabled: false
+
+scripts:
+  clean:
+    exec: flutter clean
+
+  build-runner:
+    exec: dart run build_runner watch --delete-conflicting-outputs
+
+  formatting:check:
+    exec: dart format --set-exit-if-changed .
+
+  analyze:
+    exec: dart analyze --fatal-infos
+
+  run:admin-panel:
+    exec: flutter run lib/main.dart --pid-file /tmp/flutter.pid
+    packageFilters:
+      scope: ascent_admin_panel
+
+  run:mobile:
+    exec: flutter run lib/main.dart --pid-file /tmp/flutter.pid
+    packageFilters:
+      scope: ascent_pms
