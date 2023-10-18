@@ -1,0 +1,643 @@
+{
+  "projectId": "ascent-pms",
+  "projectName": "Ascent PMS",
+  "databases": [
+    {
+      "$id": "default",
+      "name": "default",
+      "$createdAt": "2023-09-13T17:11:33.152+00:00",
+      "$updatedAt": "2023-09-13T17:11:55.568+00:00"
+    }
+  ],
+  "collections": [
+    {
+      "$id": "banners",
+      "$permissions": [
+        "read(\"users\")",
+        "read(\"any\")"
+      ],
+      "databaseId": "default",
+      "name": "banners",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "image_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "action_url",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "format": "url",
+          "default": null
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 100,
+          "default": null
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "packages",
+      "$permissions": [
+        "read(\"users\")",
+        "read(\"any\")"
+      ],
+      "databaseId": "default",
+      "name": "packages",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "name",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "image_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "homepage_visibility",
+          "type": "boolean",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "default": true
+        },
+        {
+          "key": "short_description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 2000,
+          "default": null
+        },
+        {
+          "key": "long_description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 5000,
+          "default": null
+        },
+        {
+          "key": "services",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "services",
+          "relationType": "manyToMany",
+          "twoWay": true,
+          "twoWayKey": "packages",
+          "onDelete": "setNull",
+          "side": "parent"
+        }
+      ],
+      "indexes": [
+        {
+          "key": "index_1",
+          "type": "key",
+          "status": "available",
+          "attributes": [
+            "name"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "services",
+      "$permissions": [
+        "read(\"users\")",
+        "read(\"any\")"
+      ],
+      "databaseId": "default",
+      "name": "services",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "name",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "image_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "homepage_visibility",
+          "type": "boolean",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "default": true
+        },
+        {
+          "key": "short_description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 2000,
+          "default": null
+        },
+        {
+          "key": "long_description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 5000,
+          "default": null
+        },
+        {
+          "key": "packages",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "packages",
+          "relationType": "manyToMany",
+          "twoWay": true,
+          "twoWayKey": "services",
+          "onDelete": "setNull",
+          "side": "child"
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "package_purchase_history",
+      "$permissions": [
+        "read(\"users\")"
+      ],
+      "databaseId": "default",
+      "name": "package_purchase_history",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "user_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 30,
+          "default": null
+        },
+        {
+          "key": "valid_from",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "valid_to",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "elements": [
+            "active",
+            "pending",
+            "completed"
+          ],
+          "format": "enum",
+          "default": null
+        },
+        {
+          "key": "package",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "packages",
+          "relationType": "manyToOne",
+          "twoWay": false,
+          "twoWayKey": "package_purchase_history",
+          "onDelete": "setNull",
+          "side": "parent"
+        },
+        {
+          "key": "remarks",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 5000,
+          "default": null
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "service_purchase_history",
+      "$permissions": [
+        "read(\"users\")"
+      ],
+      "databaseId": "default",
+      "name": "service_purchase_history",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "user_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 30,
+          "default": null
+        },
+        {
+          "key": "valid_from",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "valid_to",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "default": true
+        },
+        {
+          "key": "service",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "services",
+          "relationType": "manyToOne",
+          "twoWay": false,
+          "twoWayKey": "servicePurchaseHistory",
+          "onDelete": "setNull",
+          "side": "parent"
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "user_data",
+      "$permissions": [],
+      "databaseId": "default",
+      "name": "user_data",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "user_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 30,
+          "default": null
+        },
+        {
+          "key": "service_purchase_history",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "service_purchase_history",
+          "relationType": "oneToMany",
+          "twoWay": false,
+          "twoWayKey": "user_data",
+          "onDelete": "setNull",
+          "side": "parent"
+        },
+        {
+          "key": "package_purchase_history",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "package_purchase_history",
+          "relationType": "oneToMany",
+          "twoWay": false,
+          "twoWayKey": "user_data",
+          "onDelete": "setNull",
+          "side": "parent"
+        }
+      ],
+      "indexes": [
+        {
+          "key": "index_1",
+          "type": "unique",
+          "status": "available",
+          "attributes": [
+            "user_id"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "package_enquiry",
+      "$permissions": [
+        "create(\"users\")",
+        "read(\"users\")"
+      ],
+      "databaseId": "default",
+      "name": "package_enquiry",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "user_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 30,
+          "default": null
+        },
+        {
+          "key": "enquiry_date",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "resolved",
+          "type": "boolean",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "default": null
+        },
+        {
+          "key": "package",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "packages",
+          "relationType": "manyToOne",
+          "twoWay": false,
+          "twoWayKey": "package_enquiry",
+          "onDelete": "setNull",
+          "side": "parent"
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "service_enquiry",
+      "$permissions": [
+        "create(\"users\")",
+        "read(\"users\")"
+      ],
+      "databaseId": "default",
+      "name": "service_enquiry",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "user_id",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 30,
+          "default": null
+        },
+        {
+          "key": "enquiry_date",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "expected_delivery_date",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "elements": [
+            "active",
+            "pending",
+            "completed"
+          ],
+          "format": "enum",
+          "default": null
+        },
+        {
+          "key": "service",
+          "type": "relationship",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "relatedCollection": "services",
+          "relationType": "manyToOne",
+          "twoWay": false,
+          "twoWayKey": "service_enquiry",
+          "onDelete": "setNull",
+          "side": "parent"
+        },
+        {
+          "key": "remarks",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 5000,
+          "default": null
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "notifications",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "default",
+      "name": "notifications",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "image_id",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 100,
+          "default": null
+        },
+        {
+          "key": "creation_date",
+          "type": "datetime",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "format": "",
+          "default": null
+        },
+        {
+          "key": "action_url",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "format": "url",
+          "default": null
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "admin_users",
+      "$permissions": [],
+      "databaseId": "default",
+      "name": "admin_users",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
+        {
+          "key": "username",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "password",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 50,
+          "default": null
+        },
+        {
+          "key": "role",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "elements": [
+            "MainAdmin",
+            "SubAdmin"
+          ],
+          "format": "enum",
+          "default": null
+        }
+      ],
+      "indexes": []
+    }
+  ],
+  "buckets": [
+    {
+      "$id": "image_assets",
+      "$createdAt": "2023-09-13T17:13:59.804+00:00",
+      "$updatedAt": "2023-09-13T17:14:08.921+00:00",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "fileSecurity": false,
+      "name": "image_assets",
+      "enabled": true,
+      "maximumFileSize": 30000000,
+      "allowedFileExtensions": [],
+      "compression": "none",
+      "encryption": true,
+      "antivirus": true
+    }
+  ]
+}
